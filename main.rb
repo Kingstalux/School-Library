@@ -4,6 +4,8 @@ def welcome
   puts 'Welcome to the School library App!'
   puts ' '
   initialize_book
+  initialize_student
+  initialize_teacher
 end
 
 def options
@@ -31,4 +33,3 @@ end
 
 welcome
 main
-# initialize_book

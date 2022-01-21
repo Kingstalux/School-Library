@@ -1,9 +1,6 @@
 require './student'
 require './teacher'
 
-@teacher_arr = []
-@student_arr = []
-
 def create_person
     print 'Do you want to create a student (1) or a teacher (2)? [input a number]: '
     number = gets.chomp
@@ -68,3 +65,78 @@ def create_student
       puts "#{@teacher_arr.find_index(x) + @student_arr.length}) [Teacher] Name: #{x.name} ID: #{x.id} Age: #{x.age}"
     end
   end
+
+  def store_students
+    student_json = []
+    @student_arr.each do |student|
+        s = {
+            'name' => student.name,
+            'age' => student.age,
+            'classroom' => student.classroom,
+            'permission' => student.parent_permission,
+            'id' => student.id
+          }
+      student_json.push(s)
+    end
+    File.write('students.json', student_json.to_json)
+  end
+
+  def store_teachers
+    teacher_json = []
+    @teacher_arr.each do |teacher|
+        t = {
+            'name' => teacher.name,
+            'age' => teacher.age,
+            'id' => teacher.id,
+            'specialty' => teacher.specialization
+          }
+      teacher_json.push(t)
+    end
+    File.write('teachers.json', teacher_json.to_json)
+  end
+
+  def initialize_teacher
+    teacher_file = './teachers.json'
+    f = File.read(teacher_file)
+    if f.empty? == false
+      json = JSON.parse(f)
+      @teacher_array = []
+      get_teacher(json)
+    else
+      @teacher_array = []
+    end
+  end
+
+def initialize_student
+    student_file = './students.json'
+    f = File.read(student_file)
+    if f.empty? == false
+      json = JSON.parse(f)
+      @student_array = []
+      get_student(json)
+    else
+      @student_array = []
+    end
+  end
+
+def get_student(json)
+    @student_arr = []
+    i = 0
+    while i < json.length
+      s = Student.new(json[i]['age'], json[i]['classroom'], json[i]['name'], parent_permission: json[i]['permission'])
+      @student_arr.push(s)
+      i += 1
+    end
+    @student_arr
+end
+
+def get_teacher(json)
+    @teacher_arr = []
+    i = 0
+    while i < json.length
+      t = Teacher.new(json[i]['specialty'], json[i]['age'], json[i]['name'])
+      @teacher_arr.push(t)
+      i += 1
+    end
+    @teacher_arr
+end

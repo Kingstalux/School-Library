@@ -28,6 +28,8 @@ def sub_app(number)
   
     when '7'
       store_books
+      store_students
+      store_teachers
       exit_msg
     end
   end
