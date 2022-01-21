@@ -30,6 +30,7 @@ def sub_app(number)
       store_books
       store_students
       store_teachers
+      store_rentals
       exit_msg
     end
   end

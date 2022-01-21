@@ -1,8 +1,7 @@
 require './rental'
 require './manage_persons'
 require './manage_books'
-
-@rental_arr = []
+require 'json'
 
 def create_rental
     select_books
@@ -41,3 +40,43 @@ def create_rental
     puts ' '
     main
   end
+  
+  def store_rentals
+    rentals_json = []
+    @rental_arr.each do |rental|       
+        r = {
+            'date' => rental.date,
+            'name' => rental.person.name,
+            'title' => rental.book.title
+          }
+      rentals_json.push(r)
+    end
+    File.write('rentals.json', rentals_json.to_json)
+  end
+
+  def initialize_rentals
+    rental_file = './rentals.json'
+    f = File.read(rental_file)
+    if f.empty? == false
+      json = JSON.parse(f)
+      @rental_arr = []
+      get_rentals(json)
+    else
+      @rental_arr = []
+    end
+  end
+
+  def get_rentals(json)
+    @rental_arr = []
+    i = 0
+    while i < json.length
+        book = take_book_title(json[i]['title'])
+        date = json[i]['date']
+        person = take_person(json[i]['name'])
+      r = Rental.new(date, book, person)
+      @rental_arr.push(r)
+      i += 1
+    end
+end
+
+

@@ -20,7 +20,6 @@ def get_book(json)
       @book_arr.push(b)
       i += 1
     end
-    @book_arr
 end
 
 def create_book
@@ -57,4 +56,17 @@ def create_book
       books_json.push(b)
     end
     File.write('./books.json', books_json.to_json)
+  end
+
+  def take_book_title(title)
+    i = 0
+    tmp = -1
+    while i < @book_arr.length
+      if @book_arr[i].title == title
+        tmp = @book_arr[i]
+        break
+      end
+      i += 1
+    end
+    tmp
   end

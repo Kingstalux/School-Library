@@ -6,6 +6,7 @@ def welcome
   initialize_book
   initialize_student
   initialize_teacher
+  initialize_rentals
 end
 
 def options

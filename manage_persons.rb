@@ -1,5 +1,6 @@
 require './student'
 require './teacher'
+require 'json'
 
 def create_person
     print 'Do you want to create a student (1) or a teacher (2)? [input a number]: '
@@ -139,4 +140,33 @@ def get_teacher(json)
       i += 1
     end
     @teacher_arr
+end
+
+def take_person(id)
+  @student_arr.each do |student|
+    if student.id == id
+      puts student
+      person = student
+    end
+  end
+  @teacher_arr.each do |teacher|
+    if teacher.id == id
+      puts teacher
+      person = teacher
+    end
+  end
+end
+
+def take_person(name)
+  person = person
+  @student_arr.each do |student|
+    if student.name == name
+      return student
+    end
+  end
+  @teacher_arr.each do |teacher|
+    if teacher.name == name
+      return teacher
+    end
+  end
 end
