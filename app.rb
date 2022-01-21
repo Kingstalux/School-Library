@@ -27,6 +27,7 @@ def sub_app(number)
       list_rentals
   
     when '7'
+      store_books
       exit_msg
     end
   end

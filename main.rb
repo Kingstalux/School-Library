@@ -3,6 +3,7 @@ require './app'
 def welcome
   puts 'Welcome to the School library App!'
   puts ' '
+  initialize_book
 end
 
 def options
@@ -30,3 +31,4 @@ end
 
 welcome
 main
+# initialize_book

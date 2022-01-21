@@ -1,6 +1,27 @@
 require './book'
+require 'json'
 
-@book_arr = []
+def initialize_book
+    book_file = './books.json'
+    f = File.read(book_file)
+    if f.empty? == false
+      json = JSON.parse(f)
+      get_book(json)
+    else
+      @book_arr = []
+    end
+end
+
+def get_book(json)
+    @book_arr = []
+    i = 0
+    while i < json.length
+      b = Book.new(json[i]['title'], json[i]['author'])
+      @book_arr.push(b)
+      i += 1
+    end
+    @book_arr
+end
 
 def create_book
     print 'Title: '
@@ -12,6 +33,7 @@ def create_book
     puts 'Book created successfully'
     puts ' '
     main
+    @book_arr
   end
 
   def list_books
@@ -23,4 +45,16 @@ def create_book
   def select_books
     puts 'Select a book from the following list by number'
     @book_arr.each { |x| puts "#{@book_arr.find_index(x)}) Title: #{x.title}, Author: #{x.author}" }
+  end
+
+  def store_books
+    books_json = []
+    @book_arr.each do |book|
+        b = {
+            'title' => book.title,
+            'author' => book.author
+          }
+      books_json.push(b)
+    end
+    File.write('./books.json', books_json.to_json)
   end
