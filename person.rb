@@ -11,7 +11,7 @@ class Person
     @rental = []
   end
   attr_accessor :id, :name, :age
-  attr_reader :rental
+  attr_reader :rental, :parent_permission
 
   private
 
